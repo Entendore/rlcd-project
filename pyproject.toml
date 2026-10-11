@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rlcd"
+version = "1.0.0"
+description = "Reinforcement Learning for Calibrated Decisions — full System One implementation"
+requires-python = ">=3.9"
+dependencies = ["torch>=2.1", "numpy>=1.24", "pyyaml>=6.0"]
+
+[tool.setuptools.packages.find]
+include = ["rlcd*"]
