@@ -1,0 +1,59 @@
+model:
+  hidden_dim: 768
+  num_layers: 12
+  num_heads: 12
+  vocab_size: 50257
+  max_state_length: 4096
+  num_experts: 8
+  num_experts_per_token: 2
+  dropout: 0.1
+  mc_dropout_samples: 10
+  ensemble_size: 5
+
+primitives:
+  max_choice_options: 255
+  score_default_scale: [0, 10]
+  confidence_bins: 15
+
+training:
+  learning_rate: 3.0e-4
+  batch_size: 64
+  ppo_epochs: 4
+  ppo_clip: 0.2
+  alpha_accuracy: 0.5
+  beta_calibration: 0.35
+  gamma_consistency: 0.15
+  contrastive_margin: 0.1
+  adversarial_epsilon: 0.05
+  adversarial_alpha: 0.01
+  adversarial_steps: 7
+  adversarial_weight: 0.5
+  curriculum_stages: 3
+  curriculum_epochs_per_stage: 10
+
+calibration:
+  base_temperature: 1.0
+  temperature_search_range: [0.5, 2.5]
+  monitor_window: 1000
+  drift_ece_threshold: 0.02
+  soft_recal_threshold: 0.04
+  medium_recal_threshold: 0.08
+  recalibration_buffer_size: 5000
+
+inference:
+  fast_path_confidence: 0.90
+  deep_path_confidence: 0.60
+  cache_max_size: 50000
+  quantization: "int8"
+  batch_size: 32
+
+routing:
+  thresholds:
+    auto_route: 0.85
+    auto_route_with_review: 0.65
+    manual_review: 0.0
+
+domains:
+  healthcare: {min_confidence_for_action: 0.95, max_uncertainty_tolerance: 0.02}
+  financial:  {min_confidence_for_action: 0.90, max_uncertainty_tolerance: 0.05}
+  general:    {min_confidence_for_action: 0.80, max_uncertainty_tolerance: 0.15}
